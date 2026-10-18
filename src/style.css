@@ -393,3 +393,10 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .brief-send:hover { color: var(--ink); border-color: var(--paper); }
 .hero-right .badge { left: auto; right: -46px; top: -54px; bottom: auto; z-index: 2; width: 128px; height: 128px; }
 @media (max-width: 1000px) { .hero-right { width: 100%; max-width: 480px; } .hero-right .badge { right: -8px; top: -46px; width: 96px; height: 96px; } }
+
+/* wide third project card */
+.project.wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: clamp(28px, 5vw, 72px); }
+.project.wide .frame { flex: 1.25; min-width: 0; }
+.project.wide .project-info { flex: 1; }
+.project-info h3 em { color: var(--accent); }
+@media (max-width: 1000px) { .project.wide { flex-direction: column; align-items: stretch; } .project.wide .frame, .project.wide .project-info { flex: none; } }
