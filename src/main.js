@@ -120,6 +120,48 @@ function initPreviews() {
   new ResizeObserver(fit).observe(document.body);
 }
 
+// Hero brief builder: pick needs + timeline, get a pre-filled email
+function initBrief() {
+  const needs = $('#brief-needs');
+  const time = $('#brief-time');
+  const line = $('#brief-line');
+  const send = $('#brief-send');
+  if (!needs) return;
+  const EMAIL = 'mahidhardurga@gmail.com';
+
+  const update = () => {
+    const picked = $$('button.on', needs).map((b) => b.dataset.v);
+    const when = $('button.on', time).dataset.v;
+    const short = $$('button.on', needs).map((b) => b.textContent.trim());
+    line.textContent = picked.length ? `${short.join(' + ')} · ${when}` : 'pick what you need…';
+    const body = [
+      'Hi Mahidhar,',
+      '',
+      picked.length ? `I need help with: ${picked.join(', ')}.` : 'I would like to discuss a project.',
+      `Timeline: ${when}.`,
+      '',
+      'About the project (goal, stack, budget range):',
+      '',
+    ].join('\n');
+    send.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Project brief')}&body=${encodeURIComponent(body)}`;
+  };
+
+  needs.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    b.classList.toggle('on');
+    update();
+  });
+  time.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    $$('button', time).forEach((x) => x.classList.remove('on'));
+    b.classList.add('on');
+    update();
+  });
+  update();
+}
+
 /* ---------------------------------------------------------------
    Motion
 ---------------------------------------------------------------- */
@@ -312,7 +354,6 @@ function initScrollAnimations() {
   gsap.from('.contact-mail', { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.contact-mail', start: 'top 92%' } });
 
   // Hero parallax
-  gsap.to('.monogram-inner', { yPercent: -14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.hero-title', { yPercent: -18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.badge', { y: -90, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 }
@@ -339,8 +380,7 @@ function initMarquee() {
 function playIntro() {
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
   tl.from('[data-hero="line"]', { yPercent: 115, rotate: 3, duration: 1.4, stagger: 0.12 }, 0)
-    .from('.portrait', { clipPath: 'inset(100% 0% 0% 0% round 999px 999px 24px 24px)', duration: 1.5, ease: 'expo.inOut' }, 0.05)
-    .from('.monogram-inner', { scale: 0.6, rotate: -8, duration: 1.8 }, 0.05)
+    .from('.brief', { y: 70, opacity: 0, rotate: 2, duration: 1.4 }, 0.1)
     .from('[data-hero="fade"]', { y: 28, opacity: 0, duration: 1, stagger: 0.08 }, 0.35)
     .from('.nav, .nav-links', { opacity: 0, duration: 1 }, 0.5)
     .from('.hero-meta', { opacity: 0, duration: 1 }, 0.4);
@@ -382,6 +422,7 @@ function runLoader() {
 ---------------------------------------------------------------- */
 initNavBasics();
 initPreviews();
+initBrief();
 
 if (reduce) {
   $('#loader')?.remove();
