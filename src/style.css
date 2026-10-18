@@ -400,3 +400,17 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .project.wide .project-info { flex: 1; }
 .project-info h3 em { color: var(--accent); }
 @media (max-width: 1000px) { .project.wide { flex-direction: column; align-items: stretch; } .project.wide .frame, .project.wide .project-info { flex: none; } }
+
+/* sales agent mock */
+.project.wide.rev { flex-direction: row-reverse; }
+.mock { cursor: default; }
+.mock:hover { box-shadow: 0 50px 80px -36px rgba(255,74,28,.45); }
+.agent { aspect-ratio: 16 / 10; background: #262624; color: #ece8de; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(12px, 2vw, 22px); padding: 6%; }
+.agent-head { display: flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: clamp(1.7rem, 3.4vw, 2.7rem); line-height: 1; }
+.agent-head svg { color: #d97757; flex: none; }
+.agent-input { width: min(100%, 460px); min-height: 3.4em; background: #30302d; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 14px 52px 14px 16px; position: relative; font-size: clamp(0.78rem, 1.2vw, 0.95rem); color: #d9d5ca; text-align: left; }
+.agent-input b { position: absolute; right: 10px; bottom: 10px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: #d97757; color: #fff; font-weight: 600; }
+.agent-caret { display: inline-block; width: 2px; height: 1.05em; background: #d97757; margin-left: 2px; vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+.agent-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.agent-chips span { font-size: clamp(0.66rem, 1vw, 0.8rem); padding: 7px 13px; border-radius: 99px; border: 1px solid rgba(255,255,255,.14); color: #bdb8aa; }
+@media (max-width: 1000px) { .project.wide.rev { flex-direction: column; align-items: stretch; } }

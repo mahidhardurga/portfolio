@@ -162,6 +162,25 @@ function initBrief() {
   update();
 }
 
+// Sales Agent card: cycle example prompts in the mock chat input
+function initAgentMock() {
+  const el = $('#agent-typed');
+  if (!el) return;
+  const prompts = ['Prep a meeting brief for my next call', 'Find a contact', 'Show me a pipeline snapshot', 'What are our CRM totals?'];
+  if (reduce) { el.textContent = prompts[0]; return; }
+  let p = 0, c = 0, del = false;
+  const tick = () => {
+    const word = prompts[p];
+    c += del ? -1 : 1;
+    el.textContent = word.slice(0, c);
+    let wait = del ? 28 : 55;
+    if (!del && c === word.length) { wait = 1600; del = true; }
+    else if (del && c === 0) { del = false; p = (p + 1) % prompts.length; wait = 400; }
+    setTimeout(tick, wait);
+  };
+  tick();
+}
+
 /* ---------------------------------------------------------------
    Motion
 ---------------------------------------------------------------- */
@@ -423,6 +442,7 @@ function runLoader() {
 initNavBasics();
 initPreviews();
 initBrief();
+initAgentMock();
 
 if (reduce) {
   $('#loader')?.remove();
